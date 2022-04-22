@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>ETCH-A-SKETCH</title>
+</head>
+<body>
+    <div class="title"><h1>ETCH-A-SKETCH</h1></div>
+    <div class="content">
+        <div class="side-menu">
+            <h2>Pick your Color!</h2>
+            <input type="color" name="color" id="colorPicker" value="#000000">
+            <button id="colorBtn" class="selected">Color Mode</button>
+            <button id="rainbowBtn">Rainbow Grid</button>
+            <button id="eraseBtn">Eraser</button>
+            <button id="resetBtn">Reset</button>
+            <input type="range" id="slider" min="2" max="100" value="16">
+            <span>Grid Size: 16 X 16</span>
+        </div>
+        <div class="gridContainer" draggable="false">
+
+        </div>
+    </div>
+    
+
+    
+</body>
+<script src="script.js"></script>
+</html>
