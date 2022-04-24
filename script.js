@@ -9,7 +9,7 @@ let colorMode = colorPicker.value;
 let gridSize = 16;
 
 // ranger input that set the grid size
-slider.addEventListener("change", (e) => {
+slider.addEventListener("input", (e) => {
   let sliderText = document.querySelector(".side-menu > span");
   sliderText.innerHTML = `Grid Size: ${e.target.value} X ${e.target.value}`;
   gridSize = e.target.value;
@@ -33,7 +33,7 @@ gridContainer.addEventListener("mouseover", (e) => {paint(e);});
 sideMenu.addEventListener("click", (e) => {
   //checking if pressing only the buttons
   //without this validation an error may occur if click outside the button
-  //thus selecting the div and erasing it's classes
+  //thus selecting the div and erasing it's class
   if (
     e.target.id == "colorBtn" ||
     e.target.id == "rainbowBtn" ||
@@ -41,7 +41,7 @@ sideMenu.addEventListener("click", (e) => {
     e.target.id == "resetBtn"
   ) {
     //setting the buttons outcomes
-    //validation need for reset buttons, so it will not change the selected button
+    //validation needed for reset button, so it will not change the previously selected button
     if (e.target.id == "resetBtn") return createGrid(gridSize);
     btn.forEach((btn) => btn.removeAttribute("class"));
     e.target.classList.add("selected");
@@ -50,8 +50,8 @@ sideMenu.addEventListener("click", (e) => {
     if (e.target.id == "eraseBtn") colorMode = "#fff";
   }
 });
+//setting the chosen color and removing class from previously selected buttons
 
-//setting the chosen color and removing classes from previously selected buttons
 //color mode button will be selected if a new color is selected
 colorPicker.addEventListener("change", () => {
   colorMode = colorPicker.value;
@@ -64,22 +64,22 @@ colorPicker.addEventListener("change", () => {
 //grid load when the page is loaded
 window.onload = createGrid(gridSize);
 
-//function to creat a grid, 16x16 by default, each div with a class, for event listeners filtering
+//function to creat a grid, 16x16 by default
 function createGrid(gridSize) {
   resetGrid();
   gridContainer.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
   gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
   for (let i = 0; i < gridSize * gridSize; i++) {
     newDiv = document.createElement("div");
-    newDiv.classList.add("grid");
     gridContainer.appendChild(newDiv);
   }
 }
 
 //function that enable painting only if the draw is enabled
-//and if the target of event the listener has a grid class
+//and if the target of event the listener is a child of the grid container
+//without this validation if you click outside the grid, the background color will change
 function paint(e) {
-  if (draw && e.target.classList.contains("grid")) {
+  if (draw && e.target.parentNode.classList.contains("gridContainer")) {
     colorMode === "rainbow"
       ? randomColor(e.target)
       : (e.target.style.backgroundColor = colorMode);
@@ -88,9 +88,7 @@ function paint(e) {
 
 //color randomizer, I don't understand how it works but it does!
 function randomColor(target) {
-  let color = Math.floor(Math.random() * (0xffffff + 1))
-    .toString(16)
-    .padStart(6, "0");
+  let color = Math.floor(Math.random() * (0xffffff + 1)).toString(16).padStart(6, "0");
   target.style.backgroundColor = `#${color}`;
 }
 
